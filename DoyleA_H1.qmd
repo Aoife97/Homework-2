@@ -148,5 +148,15 @@ ggcorrplot(corr_matrix,
              "Figure 2: Correlation Matrix for our Boston Dataset") +
   theme_minimal()
 
+```
+## Appendix: Median Income Value distribution
 
+
+```{r}
+# Histogram of median home value
+ggplot(Boston, aes(x = medv)) +
+  geom_histogram(binwidth = 2, fill = "steelblue", color = "white") +
+  labs(title = "Histogram of Median Home Value (medv)",
+       x = "Median Home Value ($1000s)", y = "Frequency") +
+  theme_minimal()
 ```
