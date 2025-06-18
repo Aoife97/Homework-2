@@ -25,11 +25,11 @@ help file and looking at the structure of our dataset we are able to determine
 that our dataset has 14 variables and 506 observations. It should be noted that 
 almost all of our variables are numeric in nature aside from our chas 
 (river dummy variable) and rad (an index variable for access to urban highways) 
-which are both classified as being of type interger. 
+which are both classified as being of type integer. 
 
 ```{r}
 library(MASS) # loading in the MASS package
-?Boston # calls the R help file to see a brief descriptions of the datasets 
+?Boston # calls the R help file to see a brief descriptions of our dataset's 
 # variables
 str(Boston) # function that allows us to see the structure of our dataset and 
 # its variables
@@ -39,7 +39,7 @@ head(Boston, 10) # prints the first 10 rows of our dataset
 
 ## Descriptive Statistics Analysis
 
-Examing the summary statistics below reveals a wide range of values across key 
+Examining the summary statistics below reveals a wide range of values across key 
 housing attributes for our Boston dataset. For instance, examining our variable 
 for the crime rate per capita (crim) shows that crime rates in Boston can vary
 drastically from as low as 0.006 to nearly 89, indicating stark contrasts in 
@@ -70,10 +70,10 @@ pupil-teacher ratio (ptratio) appear to be more symmetrically distributed.
 Overall we find that our plot also highlights the wide variability across 
 features, which is line with previous findings around substantial variation in 
 socio-economic and environmental disparities among different neighbourhoods. 
-However,to further understand how these variables are interrelated, we now 
+However to further understand how these variables are interrelated, we now 
 turn to the correlation matrix in @fig-corr, which provides deeper 
 insights into the strength and direction of linear relationships between our 
-datasets key variables.
+dataset's key variables.
 
 ```{r}
 #| label: fig-boxplot
