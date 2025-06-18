@@ -151,6 +151,15 @@ ggcorrplot(corr_matrix,
 ```
 ## Appendix: Median Income Value distribution
 
+To further understand the total distribution of *median owner occupied home values* 
+across Boston suburbs, we use a histogram to help us identify any skewness, 
+kurtosis, outliers, and or potential value capping in the boston housing market.
+
+Overall we observed that house values appear to be mostly right-skewed, with the 
+majority of our observations being concentrated around the $20,000 mark. However, 
+there are also a few noticeable outliers, which reaffirm our previous findings of 
+possible value capping at the upper end of our household values distributions 
+tails.
 
 ```{r}
 # Histogram of median home value
