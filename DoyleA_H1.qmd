@@ -9,7 +9,7 @@ format:
       - left=12mm
       - right=12mm
       - heightrounded
-    fontsize: 10pt  
+    fontsize: 11pt  
     linestretch: 1.1  
 execute:
   eval: true  
