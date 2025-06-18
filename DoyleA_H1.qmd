@@ -12,7 +12,6 @@ format:
     fontsize: 10pt  
     linestretch: 1.1  
 execute:
-  echo: true  
   eval: true  
 ---
 
