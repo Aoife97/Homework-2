@@ -1,0 +1,153 @@
+---
+title: "STAT40830 Advanced Data Programming with R - Homework 1"
+author: "Aoife Doyle Student No: 15419052"
+format: 
+  pdf:
+    geometry: 
+      - top=15mm
+      - bottom=15mm
+      - left=12mm
+      - right=12mm
+      - heightrounded
+    fontsize: 10pt  
+    linestretch: 1.1  
+execute:
+  echo: true  
+  eval: true  
+---
+
+
+## Dataset Description
+
+For this assignment we have chosen to use the built in **Boston Housing** 
+dataset from the MASS package which contains housing data for various suburbs 
+of Boston. Utliising the `?` and `str()` functions we are able to call the R 
+help file and looking at the structure of our dataset we are able to determine 
+that our dataset has 14 variables and 506 observations. It should be noted that 
+almost all of our variables are numeric in nature aside from our chas 
+(river dummy variable) and rad (an index variable for access to urban highways) 
+which are both classified as being of type interger. 
+
+```{r}
+library(MASS) # loading in the MASS package
+?Boston # calls the R help file to see a brief descriptions of the datasets 
+# variables
+str(Boston) # function that allows us to see the structure of our dataset and 
+# its variables
+head(Boston, 10) # prints the first 10 rows of our dataset
+
+```
+
+## Descriptive Statistics Analysis
+
+Examing the summary statistics below reveals a wide range of values across key 
+housing attributes for our Boston dataset. For instance, examining our variable 
+for the crime rate per capita (crim) shows that crime rates in Boston can vary
+drastically from as low as 0.006 to nearly 89, indicating stark contrasts in 
+different neighborhoods safety levels. The median value of homes (medv) ranges 
+from **$5,000** to **$50,000**, with a mean of **$22,530**, suggesting some 
+skewness and possible value capping at the upper end of our distributions tails.
+
+There is also variation in socio-economic indicators such as the percentage of 
+lower-status residents (lstat), which ranges from *1.73%* to *37.97%*, and 
+property tax rates (tax), which range from *187* to *711*. Additionally, the 
+average number of rooms per dwelling (rm) is around *6.28*, with most homes 
+having between *5* and just under *7* rooms. These variables provide valuable 
+insights into the structural and environmental characteristics influencing 
+housing prices in the Boston area.
+
+```{r}
+summary(Boston) # prints summary statistics for each variable in our dataset
+```
+
+In line with our summary statistics @fig-boxplot below presents boxplots 
+of all variables in our Boston dataset. For several variables such as crime rate
+(crim), property tax (tax), and the percentage of lower-income residents (lstat), 
+we find that they exhibit strong right-skewed distributions with significant 
+outliers which suggests the presence of extreme values in certain Boston 
+neighborhoods. In contrast, variables such as number of rooms (rm) and the 
+pupil-teacher ratio (ptratio) appear to be more symmetrically distributed. 
+
+Overall we find that our plot also highlights the wide variability across 
+features, which is line with previous findings around substantial variation in 
+socio-economic and environmental disparities among different neighbourhoods. 
+However,to further understand how these variables are interrelated, we now 
+turn to the correlation matrix in @fig-corr, which provides deeper 
+insights into the strength and direction of linear relationships between our 
+datasets key variables.
+
+```{r}
+#| label: fig-boxplot
+#| fig-cap: "Boxplot of our Boston Housing datasets Variables"
+#| fig-width: 7
+#| fig-height: 4
+
+library(ggplot2)  # Functions used for visualization
+library(reshape2) # Functions used for reshaping our data
+
+# Utilising the melt function to reshape the data into a long format for data 
+# visualisation
+boston_long <- melt(Boston)
+
+# Creating a boxplots for our variables
+ggplot(boston_long, aes(x = variable, y = value)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.color = "darkred") +
+  theme_minimal() +
+  labs(title = "Figure 1: Boxplot of our Boston Housing Variables",
+       x = "Variable", y = "Value") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+@fig-corr below presents the correlation matrix for our Boston Housing 
+dataset in order to highlight the strength and direction of relationships 
+between our numeric variables. Overall we find that the strongest positive 
+correlation is between rad (index of accessibility to radial highways) and tax 
+(property tax rate), with a coefficient of *+0.91*, suggesting that areas with 
+greater access to highways are significantly more likely to have higher property 
+taxes.
+
+In contrast, we observed that our strongest negative correlation was between 
+lstat (percentage of lower-status population) and medv (median home value), with
+a correlation coefficient of *–0.74*, thus reinforcing the fact that areas with 
+higher concentration of economically disadvantaged residents will tend to have 
+lower housing prices.
+
+Lastly we find that houses in proximity to the Charles River (chas) shows the 
+weakest correlations among all of our variables, particularly with zn (the 
+proportion of land zoned for lots over 25,000 sq.ft.) with *-0.04*, indicating 
+that being close to a river has little to no linear relationship with zoning and 
+other housing characteristics in our dataset overall.
+
+In sum our correlation analysis highlights strong impact that key socioeconomic 
+and structural factors such as access to highways, number of rooms, and income 
+level can have on influencing housing values in Boston, while other variables 
+like proximity to the river appear to have minimal to no impact.
+
+
+```{r}
+#| label: fig-corr
+#| fig-cap: "Correlation Matrix for our Boston Housing Dataset"
+#| fig-width: 7
+#| fig-height: 4
+
+# Creating our correlation matrix for our heat map
+numeric_boston <- Boston[, sapply(Boston, is.numeric)]
+corr_matrix <- cor(numeric_boston)
+
+library(ggcorrplot) # functions for reordering the correlation matrix and 
+# displays the significance level on the plot.
+
+# Creating a Heatmap using ggcorrplot to see the relationship between variables
+ggcorrplot(corr_matrix, 
+           method = "square", # squares instead of circles for data visuals
+           type = "lower", # show only lower triangle
+           lab = TRUE, # add in correlation variables
+           lab_size = 3, 
+           colors = c("darkred", "white", "darkblue"),
+           title = 
+             "Figure 2: Correlation Matrix for our Boston Dataset") +
+  theme_minimal()
+
+
+```
